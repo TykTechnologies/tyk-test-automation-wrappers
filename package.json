@@ -2,7 +2,7 @@
   "name": "tyk-test-automation-wrappers",
   "version": "1.0.0",
   "description": "Wrappers around UI elements for automated tests",
-  "main": "lib/index.d.ts",
+  "main": "src/index.ts",
   "files": [
     "lib"
   ],
@@ -10,7 +10,7 @@
     "build": "tsc",
     "clean": "tsc --build --clean",
     "lint": "npx eslint .",
-    "prepare": "npm install"
+    "prepare": "tsc"
   },
   "repository": {
     "type": "git",
