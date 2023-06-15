@@ -15,6 +15,7 @@
   "bugs": {
     "url": "https://github.com/TykTechnologies/tyk-test-automation-wrappers/issues"
   },
+  "type": "module",
   "homepage": "https://github.com/TykTechnologies/tyk-test-automation-wrappers#readme",
   "devDependencies": {
     "@playwright/test": "^1.35.0",
