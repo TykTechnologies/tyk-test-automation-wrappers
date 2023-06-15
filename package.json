@@ -2,7 +2,7 @@
   "name": "tyk-test-automation-wrappers",
   "version": "1.0.0",
   "description": "Wrappers around UI elements for automated tests",
-  "main": "lib/index.js",
+  "main": "lib/index.d.ts",
   "files": [
     "lib"
   ],
