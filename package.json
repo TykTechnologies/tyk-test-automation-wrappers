@@ -9,7 +9,8 @@
   "scripts": {
     "build": "tsc",
     "clean": "tsc --build --clean",
-    "lint": "npx eslint ."
+    "lint": "npx eslint .",
+    "prepare": "npm install"
   },
   "repository": {
     "type": "git",
