@@ -1,14 +1,21 @@
-import { type Locator } from '@playwright/test'
+import { Locator, type Page } from '@playwright/test';
 
 /**
  * Representing all browser objects
  * @class
  */
-class Wrapper {
-  readonly element: Locator
 
-  constructor (element: Locator) {
-    this.element = element
+export class Wrapper  {
+  readonly element: Locator;
+  readonly page: Page;
+
+  constructor(selector: Locator | string, page: Page) {
+    if (typeof selector === 'string') {
+      this.element = page.locator(selector);
+    } else {
+      this.element = selector;
+    }
+    this.page = page;
   }
 
   /**
@@ -16,120 +23,70 @@ class Wrapper {
  * if button not exists or is not clickable - function will wait
  * @function
  */
-  async click (): Promise<void> {
-    await this.element.click()
-  }
-
-  /**
- * Clicking object
- * if button not exists or is not clickable - function will wait
- * @function
- */
-  $ (selector: string): Locator {
-    return this.element.locator(selector)
-  }
-
-  /**
- * Clicking browser object using js command executed inside browser
- * Could be used when regular $element.click() is not working
- * @function
- */
-  // jsClick() {
-  //   console.log(`>>> Clicking ${this.element} executing JS command`)
-  //   return browser.execute("arguments[0].click();", this.element);
-  // }
-
-  /**
- * @function
- */
-  async waitForExist (): Promise<void> {
-    await this.element.waitFor()
-  };
-
-  /**
- * @function
- */
-  async waitForClickable (): Promise<void> {
-    await this.waitForExist()
-    await this.element.waitFor({ state: 'visible' })
+  async click(): Promise<void> {
+    if (await this.element.count() > 1) {
+      await this.element.nth(0).click();
+    } else {
+      await this.element.click();
+    }
   }
 
   /**
  * @function
  */
-  async fill (value: string): Promise<void> {
-    return await this.element.fill(value)
+  async waitForExist(): Promise<void> {
+		await await this.element.waitFor();
   }
 
-//   /**
-//  * @function
-//  */
-//   async getText () { return await this.element.getText() }
+  async fill(value: string, options?: {force?: boolean;noWaitAfter?: boolean;timeout?: number}): Promise<void> {
+    await this.element.fill(value, options);
+  }
 
-//   /**
-//  * @function
-//  */
-//   async getValue () { return await this.element.getValue() }
+  /**
+ * @function
+ */
+  async getText(): Promise<string | null> { return await this.element.textContent(); }
 
-//   /**
-//  * @function
-//  */
-//   async waitForDisplayed () { return await this.element.waitForDisplayed() }
+  /**
+ * @function
+ */
+  async getValue(): Promise<string> { return await this.element.inputValue(); }
 
-//   /**
-//  * @function
-//  */
-//   async getAttribute (attributeName) { return await this.element.getAttribute(attributeName) }
+  /**
+ * @function
+ */
+  async waitForDisplayed(): Promise<void> { await this.element.waitFor({ state: 'visible' }); }
 
-//   /**
-//  * @function
-//  */
-//   async getCSSProperty (cssProperty) { return await this.element.getCSSProperty(cssProperty) }
+  /**
+ * @function
+ */
+  async getAttribute(attributeName: string): Promise<string | null> { return await this.element.getAttribute(attributeName); }
 
-//   /**
-//  * @function
-//  */
-//   async getSize () { return await this.element.getSize() }
+  /**
+ * @function
+ */
+  async getCSSProperty(cssProperty: string): Promise<string | null> { return await this.element.getAttribute(cssProperty); }
 
-//   /**
-//  * @function
-//  */
-//   async isDisplayed () { return await this.element.isDisplayed() }
+  /**
+ * @function
+ */
+  async isVisible(options?: { state?: 'attached' | 'detached' | 'visible' | 'hidden' | undefined; timeout?: number | undefined; } | undefined): Promise<boolean> 
+  { return await this.element.isVisible(options); }
 
-//   /**
-//  * @function
-//  */
-//   async isClickable () { return await this.element.isClickable() }
+    /**
+ * @function
+ */
+    waitFor(options?: { state?: 'attached' | 'detached' | 'visible' | 'hidden' | undefined; timeout?: number | undefined; } | undefined): Promise<void> {
+			return this.element.waitFor(options);
+    }
 
-//   /**
-//  * @function
-//  */
-//   async isFocused () { return await this.element.isFocused() }
+  /**
+ * @function
+ */
+  async scrollIntoView(): Promise<void> { await this.element.scrollIntoViewIfNeeded(); }
 
-//   /**
-//  * @function
-//  */
-//   async isExisting () { return await this.element.isExisting() }
-
-//   /**
-//  * @function
-//  */
-//   async getProperty (property) { return await this.element.getProperty(property) }
-
-//   /**
-//  * @function
-//  */
-//   async scrollIntoView () { return await this.element.scrollIntoView() }
-
-//   /**
-//  * @function
-//  */
-//   async waitForEnabled () { return await this.element.waitForEnabled() }
-
-//   /**
-//  * @function
-//  */
-//   async setValue (value) { return await this.element.setValue(value) }
+  async toHaveValue(value: string): Promise<boolean> {
+    return await this.element.inputValue() === value;
+  }
 }
 
-module.exports = Wrapper

@@ -1,0 +1,12 @@
+# Node
+node_modules/
+
+# Don't keep recordings from test runs
+results/
+*.log
+
+# Env variables
+.env
+/test-results/
+/playwright-report/
+/playwright/.cache/
