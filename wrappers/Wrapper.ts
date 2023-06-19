@@ -76,8 +76,11 @@ export class Wrapper  {
     /**
  * @function
  */
-    waitFor(options?: { state?: 'attached' | 'detached' | 'visible' | 'hidden' | undefined; timeout?: number | undefined; } | undefined): Promise<void> {
-			return this.element.waitFor(options);
+  async waitFor(options?: { state?: 'attached' | 'detached' | 'visible' | 'hidden' | undefined; timeout?: number | undefined; } | undefined): Promise<void> {
+      if (await this.element.count() > 1) {
+        return await this.element.first().waitFor(options);
+      }
+      return await this.element.waitFor(options);
     }
 
   /**

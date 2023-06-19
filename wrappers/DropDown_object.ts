@@ -35,17 +35,9 @@ export class DropDown_object extends Wrapper{
  async selectOption(text: string): Promise<void> {
   await this.setDropDownType();
   console.log(`>>> Selecting option: locator${this.optionTagName}=locator${text} in locator${this.element}`);
-  this.element.click();
+  await this.element.click();
   const optionElement = await this.getOptionElement(text);
-  // if (!optionElement.isVisible()){
-  //   optionElement =this.page.locator(`locator${this.optionTagName}*=locator${text}`);
-  // } 
-  // if (await optionElement.waitFor()) {
-  //   optionElement.click();
-  //   return;
-  // }
-  // this.element.click();
-  optionElement.click();
+  await optionElement.click();
 }
 
 /**
@@ -106,8 +98,8 @@ async selectComboboxOption(text: string) {
    async setValue(value: string) {
     const inputField = this.element.locator('input');
     await expect(inputField).toBeAttached();
-    inputField.fill(value);
-    inputField.press("Enter");    
+    await inputField.fill(value);
+    await inputField.press("Enter");    
   }
 
 }
