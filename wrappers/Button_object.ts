@@ -16,8 +16,6 @@ export class Button_object extends Wrapper{
     console.log(`>>> Clicking button: locator${this.element}`);
     if (await this.element.count() > 1) {
       await this.element.first().click();
-    } else {
-      await this.element.first().click();
       return;
     }
     await super.waitFor({state: 'visible'});
