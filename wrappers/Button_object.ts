@@ -18,7 +18,6 @@ export class Button_object extends Wrapper{
       await this.element.first().click();
       return;
     }
-    await super.waitFor({state: 'visible'});
     await this.element.first().click();
   }
 
