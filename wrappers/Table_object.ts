@@ -65,8 +65,8 @@ export class Table_object extends Wrapper implements TableObjectType {
     return [];
   }
 
-  isCellWithTextPreset(text: string): Promise<boolean> {
-    return this.element.getByText(text).isVisible();
+  async isCellWithTextPreset(text: string): Promise<boolean> {
+    return await this.element.getByText(text).isVisible();
   }
 
 /**

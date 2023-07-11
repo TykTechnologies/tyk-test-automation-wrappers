@@ -91,5 +91,9 @@ export class Wrapper  {
   async toHaveValue(value: string): Promise<boolean> {
     return await this.element.inputValue() === value;
   }
+
+  async press(key: string): Promise<boolean> {
+    return await this.element.press(key);
+  }
 }
 
