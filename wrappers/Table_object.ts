@@ -7,6 +7,7 @@ export type TableObjectType = {
   getRow: (rowNumber: number) => Promise<Locator>;
   getRowWithValue: (cellValue: string) => Promise<string[]>;
   clickCellWithText: (cellValue: string) => Promise<void>;
+  locator: (selector: string) => Locator;
 };
 
 /**
