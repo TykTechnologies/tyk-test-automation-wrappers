@@ -1,20 +1,11 @@
 import { Wrapper } from './Wrapper';
 import { Locator } from '@playwright/test';
 
-export type TableObjectType = {
-  getRowCount: () => Promise<number>;
-  getRowValues: (rowNumber: number) => Promise<string[]>;
-  getRow: (rowNumber: number) => Promise<Locator>;
-  getRowWithValue: (cellValue: string) => Promise<string[]>;
-  clickCellWithText: (cellValue: string) => Promise<void>;
-  locator: (selector: string) => Locator;
-};
-
 /**
  * Representing table object
  * @class
  */
-export class Table_object extends Wrapper implements TableObjectType {
+export class Table_object extends Wrapper {
 /**
  * getting count of currently displayed rows.
  * each 'tr' type node is counted as separate row

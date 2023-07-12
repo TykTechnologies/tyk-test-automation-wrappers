@@ -95,5 +95,9 @@ export class Wrapper  {
   async press(key: string): Promise<void> {
     await this.element.press(key);
   }
+
+  async locator(selector: string): Promise<Locator> {
+    return await this.element.locator(selector);
+  }
 }
 
