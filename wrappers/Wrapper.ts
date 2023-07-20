@@ -71,7 +71,7 @@ export class Wrapper  {
  * @function
  */
   async isVisible(options?: { state?: 'attached' | 'detached' | 'visible' | 'hidden' | undefined; timeout?: number | undefined; } | undefined): Promise<boolean> 
-  { return await this.element.isVisible(options); }
+  { return await this.element.first().isVisible(options); }
 
     /**
  * @function
