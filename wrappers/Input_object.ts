@@ -31,4 +31,9 @@ export class Input_object extends Wrapper{
  */
   clearValue() {return this.element.clear();}
 
+  /**
+ * @function
+ */
+  type(text: string, options?: {delay?: number; noWaitAfter?: boolean; timeout?: number;}) {return this.element.type(text, options);}
+
 }
