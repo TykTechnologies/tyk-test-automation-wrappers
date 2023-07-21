@@ -11,9 +11,9 @@ export class Wrapper  {
 
   constructor(selector: Locator | string, page: Page) {
     if (typeof selector === 'string') {
-      this.element = page.locator(selector);
+      this.element = page.locator(selector).first();
     } else {
-      this.element = selector;
+      this.element = selector.first();
     }
     this.page = page;
   }
