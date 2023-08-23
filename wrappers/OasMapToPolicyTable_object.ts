@@ -15,7 +15,7 @@ export class OasMapToPolicyTable_object extends Wrapper {
  * @return {int}
  */
   async getRowCount(): Promise<number> {
-    return (await this.element.locator('li')).length;
+    return await this.element.locator('li').count();
   }
 
 /**
@@ -24,10 +24,10 @@ export class OasMapToPolicyTable_object extends Wrapper {
  * @param {String} cellValue value of cell to find. For example client id or claim name
  * @returns {Webelement}
  */
-  async getRowWithValue(cellValue: string): Webelement {
+  async getRowWithValue(cellValue: string): Promise<Locator> {
     for (let rowNumber = 0; rowNumber < await this.getRowCount(); rowNumber++) {
       const rowElement = await this.element.locator('li').nth(rowNumber);
-      if (rowElement.locator('input').getAttribute('value') === cellValue)
+      if (await rowElement.locator('input').getAttribute('value') === cellValue)
         return rowElement;
     }
   }
@@ -41,11 +41,11 @@ export class OasMapToPolicyTable_object extends Wrapper {
  async checkIfRowExists(cellValue: string): Promise<boolean> {
   for (let rowNumber = 0; rowNumber < await this.getRowCount(); rowNumber++) {
     const rowElement = await this.element.locator('li').nth(rowNumber);
-    if (await rowElement.locator('div').first().getText() === cellValue){
+    if (await rowElement.locator('div').first().textContent() === cellValue){
       return true;
     }
-    return false;
   }
+  return false;
 }
 
 /**
@@ -57,9 +57,10 @@ export class OasMapToPolicyTable_object extends Wrapper {
  async getRowWithValueFromSavedTable(cellValue: string): Promise<Locator> {
   for (let rowNumber = 0; rowNumber < await this.getRowCount(); rowNumber++) {
     const rowElement = await this.element.locator('li').nth(rowNumber);
-    if (await rowElement.locator('div').first().getText() === cellValue)
+    if (await rowElement.locator('div').first().textContent() === cellValue)
       return rowElement;
   }
+  throw new Error(`>>> Row with value ${cellValue} was not found`);
 }
 
 /**
@@ -119,7 +120,7 @@ export class OasMapToPolicyTable_object extends Wrapper {
  */
  async getPolicyValueForCell(cellName: string): Promise<string> {
     const row = await this.getRowWithValueFromSavedTable(cellName);
-    return await row.locator('div').nth(3).getText();
+    return await row.locator('div').nth(3).textContent();
 }
 
 /**
@@ -132,7 +133,7 @@ export class OasMapToPolicyTable_object extends Wrapper {
  async selectPolicyOption(policyDropdown: Locator, policyName: string) {
     console.log(`>>> Selecting option: li*=${policyName}`);
     const optionElement = await this.page.locator(`//li[@title="${policyName}"]`);
-    await policyDropdown.waitForExist();
+    await policyDropdown.waitFor();
     await policyDropdown.click();
     if (await optionElement.isVisible()) {
       optionElement.click();
