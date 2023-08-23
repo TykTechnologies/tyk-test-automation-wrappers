@@ -30,6 +30,7 @@ export class OasMapToPolicyTable_object extends Wrapper {
       if (await rowElement.locator('input').getAttribute('value') === cellValue)
         return rowElement;
     }
+    return null;
   }
 
 /**
@@ -86,8 +87,8 @@ export class OasMapToPolicyTable_object extends Wrapper {
   async changeName(oldCellName: string, newCellName: string) {
     const row = await this.getRowWithValue(oldCellName);
     const cellInputField = await row.locator('input');
-    await cellInputField.clearValue();
-    await cellInputField.setValue(newCellName);
+    // await cellInputField.clearValue();
+    await cellInputField.fill(newCellName);
   }
 
 /**
@@ -120,7 +121,11 @@ export class OasMapToPolicyTable_object extends Wrapper {
  */
  async getPolicyValueForCell(cellName: string): Promise<string> {
     const row = await this.getRowWithValueFromSavedTable(cellName);
-    return await row.locator('div').nth(3).textContent();
+    const text = await row.locator('div').nth(3).textContent();
+    if (text === null) {
+      throw new Error(`>>> Unable to get policy value for cell ${cellName}`);
+    }
+    return text;
 }
 
 /**
