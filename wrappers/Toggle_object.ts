@@ -17,8 +17,8 @@ export class Toggle_object extends Wrapper{
   async click() {
     console.log(`>>> Clicking toggle: ${this.element}`);
     const clickableElement = await (await this.getContainer()).locator('.tyk-toggle__item-notch');
-    clickableElement.waitForClickable();
-    clickableElement.click();
+    await clickableElement.waitFor();
+    await clickableElement.click();
   }
 
   /**
@@ -28,7 +28,12 @@ export class Toggle_object extends Wrapper{
  * @function
  */
   async isSelected(): Promise<boolean> {
-    return (await this.getContainer()).getAttribute('class').includes(selectedToggleClass);
+    const container = await this.getContainer();
+    const toggleClass = await container.getAttribute('class');
+    if (toggleClass === null) {
+        throw new Error('Unable to get class for toggle: ' + this.element);
+    }
+    return toggleClass.includes(selectedToggleClass);
   }
 
   async getContainer(): Promise<Locator> {
@@ -36,6 +41,9 @@ export class Toggle_object extends Wrapper{
     for (let levelsUp = 1; levelsUp <= 6; levelsUp++) {
       currentElement = await currentElement.locator("..");
       const currentElementClass = await currentElement.getAttribute('class');
+      if (currentElementClass === null) {
+        continue;
+      }
       if (currentElementClass !== null && currentElementClass.includes(containerClass))
         return currentElement;
     }
