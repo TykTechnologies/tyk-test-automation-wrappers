@@ -30,7 +30,7 @@ export class OasMapToPolicyTable_object extends Wrapper {
       if (await rowElement.locator('input').getAttribute('value') === cellValue)
         return rowElement;
     }
-    return null;
+    throw new Error(`>>> Row with value ${cellValue} was not found`);
   }
 
 /**
