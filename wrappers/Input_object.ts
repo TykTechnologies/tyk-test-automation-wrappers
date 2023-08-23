@@ -29,7 +29,12 @@ export class Input_object extends Wrapper{
 /**
  * @function
  */
-  clearValue() {return this.element.clear();}
+  async clearValue() {return await this.element.clear();}
+
+/**
+ * @function
+ */
+  async clear() {return await this.element.fill('');}
 
   /**
  * @function
