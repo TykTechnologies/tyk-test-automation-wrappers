@@ -14,7 +14,7 @@ export class SlowButton_object extends Button_object{
  */
   async click(pauseTimeS = 0.5): Promise<void> {
     console.log(`>>> Pause and plicking button: locator${this.element}`);
-    this.page.waitForTimeout(pauseTimeS * 1000);
+    await this.page.waitForTimeout(pauseTimeS * 1000);
     if (await this.element.count() > 1) {
       await this.element.first().click();
       return;
