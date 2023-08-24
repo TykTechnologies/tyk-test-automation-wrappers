@@ -60,7 +60,13 @@ export class Wrapper  {
   /**
  * @function
  */
-  async getAttribute(attributeName: string): Promise<string | null> { return await this.element.getAttribute(attributeName); }
+  async getAttribute(attributeName: string): Promise<string> { 
+    const attributeValue = await this.element.getAttribute(attributeName); 
+    if (attributeValue === null) {
+      throw new Error(`Unable to get attribute ${attributeName} for element ${this.element}`);
+    }
+    return attributeValue;
+  }
 
   /**
  * @function
