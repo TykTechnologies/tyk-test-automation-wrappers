@@ -17,9 +17,9 @@ export class Checkbox_object extends Wrapper{
  */
   async check() {
     console.log('>>> Checking Checkbox!');
-    if (await this.isSelected()) 
+    if (await this.element.isChecked()) 
       return;
-    await this.element.click();
+    await this.element.check();
     await expect(this.element).toHaveValue('true');
   }
 
@@ -30,10 +30,11 @@ export class Checkbox_object extends Wrapper{
  */
    async uncheck() {
     console.log('>>> Unchecking Checkbox!');
-    if (await this.isNotSelected()) 
+    const isChecked = await this.element.isChecked();
+    if (!isChecked) 
       return;
-    await this.element.click();
-    await expect(this.element).toHaveValue('false');
+    await this.element.check();
+    expect(await this.element.isChecked()).toBeFalsy();
   }
 
 /**
@@ -52,7 +53,8 @@ export class Checkbox_object extends Wrapper{
  * @return {boolean}
  */
      async isNotSelected(): Promise<boolean> {
-      return await this.element.isDisabled();
+      const isChecked = await this.element.isChecked();
+      return !isChecked;
     }
     
 }
