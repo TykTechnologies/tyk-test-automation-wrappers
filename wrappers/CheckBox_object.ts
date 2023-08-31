@@ -34,11 +34,15 @@ export class Checkbox_object extends Wrapper{
  */
    async uncheck() {
     console.log('>>> Unchecking Checkbox!');
-    const isChecked = await this.element.isChecked();
-    if (!isChecked) 
-      return;
-    await this.element.check();
-    expect(await this.element.isChecked()).toBeFalsy();
+    await expect.poll( async () => {
+      await this.element.waitFor();
+      const isChecked = await this.element.isChecked();
+      if (!isChecked) {
+        return true;
+      }
+      await this.element.click();
+      return false;
+    }).toBeTruthy();
   }
 
 /**
