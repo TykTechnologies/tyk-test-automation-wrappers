@@ -17,10 +17,14 @@ export class Checkbox_object extends Wrapper{
  */
   async check() {
     console.log('>>> Checking Checkbox!');
-    if (await this.element.isChecked()) 
-      return;
-    await this.element.check();
-    await expect(this.element).toHaveValue('true');
+    await expect.poll( async () => {
+      await this.element.waitFor();
+      if (await this.element.isChecked()) {
+        return true;
+      }
+      await this.element.click();
+      return false;
+    }).toBeTruthy();
   }
 
 /**
