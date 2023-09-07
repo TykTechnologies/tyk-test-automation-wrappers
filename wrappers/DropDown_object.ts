@@ -73,7 +73,7 @@ async selectComboboxOption(text: string) {
   this.element.click();
   for (const option of options) {
     const optionElement = await this.getOptionElement(option);
-    await optionElement.scrollIntoView();
+    await optionElement.scrollIntoViewIfNeeded();
     await optionElement.click();
   }
   this.element.press('Escape');//sending Escape to close the list
