@@ -71,10 +71,10 @@ async selectComboboxOption(text: string) {
  async selectOptions(options: string[]) {
   console.log(`>>> Selecting options: locator{options} in locator{this.selector}`);
   this.element.click();
-  options.forEach(async option => {
+  for (const option of options) {
     const optionElement = await this.getOptionElement(option);
     await optionElement.click();
-  });
+  }
   this.element.press('Escape');//sending Escape to close the list
 }
 
