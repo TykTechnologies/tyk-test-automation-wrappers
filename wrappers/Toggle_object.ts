@@ -36,6 +36,10 @@ export class Toggle_object extends Wrapper{
     return toggleClass.includes(selectedToggleClass);
   }
 
+  async isChecked(): Promise<boolean> {
+    return await this.isSelected();
+    }
+
   async getContainer(): Promise<Locator> {
     let currentElement = this.element;
     for (let levelsUp = 1; levelsUp <= 6; levelsUp++) {
