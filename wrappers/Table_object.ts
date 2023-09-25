@@ -81,9 +81,11 @@ export class Table_object extends Wrapper {
  * @return {boolean}
   */
   async isCellWithTextNotDisplayed(text: string): Promise<boolean> {
-    if (await this.element.isVisible())
-      return  !this.element.getByText(text).isVisible();
-    return false;
+    if (await this.element.isVisible()) {
+      const isCellVisible = await this.element.getByText(text).isVisible();
+      return !isCellVisible;
+    }
+    return true; //if table is not visible - we can assume that cell is not visible
   }
 
 }
