@@ -102,8 +102,8 @@ export class Wrapper  {
     await this.element.press(key);
   }
 
-  async locator(selector: string): Promise<Locator> {
-    return await this.element.locator(selector);
+  locator(selector: string): Locator{
+    return this.element.locator(selector);
   }
 }
 
