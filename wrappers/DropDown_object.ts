@@ -20,7 +20,7 @@ export class DropDown_object extends Wrapper{
     this.optionTagName =  (isDropDownHaveSelectTagName) ? "option" : "li";
   }
 
-  private async getOptionElement(text: string): Promise<Locator> {
+  private async getOptionElement(text: string | RegExp): Promise<Locator> {
     await this.setDropDownType();
     return this.page.locator(`${this.optionTagName}`).filter({ hasText: text });
   }
@@ -32,7 +32,7 @@ export class DropDown_object extends Wrapper{
  * @param {String} option text
  * @function
  */
- async selectOption(text: string): Promise<void> {
+ async selectOption(text: string | RegExp): Promise<void> {
   await this.setDropDownType();
   console.log(`>>> Selecting option: locator${this.optionTagName}=locator${text} in locator${this.element}`);
   await this.element.click();
