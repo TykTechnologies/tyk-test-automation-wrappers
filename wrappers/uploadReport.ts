@@ -27,7 +27,7 @@ for (const item of fs.readdirSync(BASE_FOLDER_PATH)) {
     uploadFolderToS3(BASE_FOLDER_PATH);
 }
 
-async function uploadFolderToS3(folderPath: string) {
+export async function uploadFolderToS3(folderPath: string) {
     try {
         // Get a list of all files and subdirectories in the current folder
         const items = fs.readdirSync(folderPath);
