@@ -22,6 +22,8 @@
     "url": "https://github.com/TykTechnologies/tyk-test-automation-wrappers/issues"
   },
   "dependencies": {
+    "aws-sdk": "^2.1471.0",
+    "mime-types": "^2.1.35"
   },
   "homepage": "https://github.com/TykTechnologies/tyk-test-automation-wrappers#readme",
   "devDependencies": {
