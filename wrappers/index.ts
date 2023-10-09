@@ -7,4 +7,3 @@ export { Table_object } from './Table_object';
 export { Checkbox_object } from './CheckBox_object';
 export { Toggle_object } from './Toggle_object';
 export { Accordion_object } from './Accordion_object';
-export { uploadFolderToS3 } from './uploadReport';
