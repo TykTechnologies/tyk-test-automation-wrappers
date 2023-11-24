@@ -2,7 +2,7 @@
 Wrappers for UI tests automation
 
 ## Wrappers docs
-[link](https://github.com/TykTechnologies/tyk-test-automation-wrappers/docs/index.html)
+[link](docs/index.html)
 
 ## How to update wrappers
 If you need to update or modify method used by any wrapper follow the steps:
