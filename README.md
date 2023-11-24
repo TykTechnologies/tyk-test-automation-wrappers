@@ -1,6 +1,9 @@
 # tyk-test-automation-wrappers
 Wrappers for UI tests automation
 
+## Wrappers docs
+[link](https://github.com/TykTechnologies/tyk-test-automation-wrappers/docs/index.html)
+
 ## How to update wrappers
 If you need to update or modify method used by any wrapper follow the steps:
 - in folder _wrappers_ find class you are interested in (all class are extedning Wrapper.ts, maybe your method belengs there)
