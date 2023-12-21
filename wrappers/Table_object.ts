@@ -58,7 +58,7 @@ export class Table_object extends Wrapper {
   }
 
   async isCellWithTextPreset(text: string): Promise<boolean> {
-    return await this.element.getByText(text).isVisible();
+    return await this.element.getByText(text).first().isVisible();
   }
 
 /**
@@ -68,8 +68,9 @@ export class Table_object extends Wrapper {
   */
   async clickCellWithText(cellValue: string) {
     console.log(`>>> Clicking cell with text locator{cellValue}`);
-    await this.element.locator('tbody').waitFor(); 
-    await this.element.getByText(cellValue).click();
+    await this.element.locator('tbody').waitFor();
+    await this.element.getByText(cellValue).first().waitFor();
+    await this.element.getByText(cellValue).first().click();
   }
 
 /**
