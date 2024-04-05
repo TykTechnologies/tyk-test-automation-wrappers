@@ -1,11 +1,11 @@
-import { Locator, type Page } from '@playwright/test';
+import { Locator, expect, type Page } from '@playwright/test';
 
 /**
  * Representing all browser objects
  * @class
  */
 
-export class Wrapper  {
+export class Wrapper {
   readonly element: Locator;
   readonly page: Page;
 
@@ -17,6 +17,8 @@ export class Wrapper  {
     }
     this.page = page;
   }
+
+
 
   /**
  * Clicking object
@@ -35,10 +37,11 @@ export class Wrapper  {
  * @function
  */
   async waitForExist(): Promise<void> {
-		await await this.element.waitFor();
+    await this.element.waitFor();
   }
 
-  async fill(value: string, options?: {force?: boolean;noWaitAfter?: boolean;timeout?: number}): Promise<void> {
+  async fill(value: string, options?: { force?: boolean; noWaitAfter?: boolean; timeout?: number }): Promise<void> {
+    await this.element.waitFor();
     await this.element.fill(value, options);
   }
 
@@ -60,8 +63,8 @@ export class Wrapper  {
   /**
  * @function
  */
-  async getAttribute(attributeName: string): Promise<string> { 
-    const attributeValue = await this.element.getAttribute(attributeName); 
+  async getAttribute(attributeName: string): Promise<string> {
+    const attributeValue = await this.element.getAttribute(attributeName);
     if (attributeValue === null) {
       throw new Error(`Unable to get attribute ${attributeName} for element ${this.element}`);
     }
@@ -76,18 +79,20 @@ export class Wrapper  {
   /**
  * @function
  */
-  async isVisible(options?: { state?: 'attached' | 'detached' | 'visible' | 'hidden' | undefined; timeout?: number | undefined; } | undefined): Promise<boolean> 
-  { return await this.element.first().isVisible(options); }
+  async isVisible(options?: { state?: 'attached' | 'detached' | 'visible' | 'hidden' | undefined; timeout?: number | undefined; } | undefined): Promise<boolean> { return await this.element.first().isVisible(options); }
 
-    /**
- * @function
- */
+  /**
+* @function
+*/
   async waitFor(options?: { state?: 'attached' | 'detached' | 'visible' | 'hidden' | undefined; timeout?: number | undefined; } | undefined): Promise<void> {
+    await expect(async () => {
       if (await this.element.count() > 1) {
         return await this.element.first().waitFor(options);
       }
       return await this.element.waitFor(options);
-    }
+    }).toPass({ timeout: 10000 });
+  }
+
 
   /**
  * @function
@@ -102,7 +107,7 @@ export class Wrapper  {
     await this.element.press(key);
   }
 
-  locator(selector: string): Locator{
+  locator(selector: string): Locator {
     return this.element.locator(selector);
   }
 }
