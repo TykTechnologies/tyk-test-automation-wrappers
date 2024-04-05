@@ -24,9 +24,9 @@ export class Table_object extends Wrapper {
  * @return {String[]}
  */
   async getRowValues(rowNumber: number): Promise<string[]> {
-    let row = await this.getRow(rowNumber);
-    let rowValues = [];
-    for (let cell of await row.locator('td').all()) {
+    const row = await this.getRow(rowNumber);
+    const rowValues = [];
+    for (const cell of await row.locator('td').all()) {
       rowValues.push(await cell.innerText());
     }
     return rowValues;
@@ -50,7 +50,7 @@ export class Table_object extends Wrapper {
  */
   async getRowWithValue(cellValue: string): Promise<string[]> {
     for (let rowNumber = 0; rowNumber < await this.getRowCount(); rowNumber++) {
-      let rowValues = await this.getRowValues(rowNumber);
+      const rowValues = await this.getRowValues(rowNumber);
       if (rowValues.includes(cellValue))
         return rowValues;
     }
@@ -58,6 +58,7 @@ export class Table_object extends Wrapper {
   }
 
   async isCellWithTextPreset(text: string): Promise<boolean> {
+    await this.waitFor();
     return await this.element.getByText(text).first().isVisible();
   }
 
@@ -68,6 +69,7 @@ export class Table_object extends Wrapper {
   */
   async clickCellWithText(cellValue: string) {
     console.log(`>>> Clicking cell with text locator{cellValue}`);
+    await this.waitFor();
     await this.element.locator('tbody').waitFor();
     await this.element.getByText(cellValue).first().waitFor();
     await this.element.getByText(cellValue).first().click();
