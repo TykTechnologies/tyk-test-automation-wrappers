@@ -13,6 +13,7 @@ export class Input_object extends Wrapper{
  */
   async fill(value: string): Promise<void> {
     console.log(`>>> Setting value: ${value} to ${this.element}`);
+    await this.element.scrollIntoViewIfNeeded();
     await this.element.fill(value);
   }
 

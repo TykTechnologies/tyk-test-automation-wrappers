@@ -7,15 +7,20 @@ import { Locator, Page, expect } from '@playwright/test';
  * @class
  */
 export class DropDown_object extends Wrapper{
+  providedOptionTag;
   optionTagName = "li";
   get selectorTag() {return "select";}
   
-  constructor(selector: Locator | string, page: Page) {
+  constructor(selector: Locator | string, page: Page, options?: {optionTagName: string}) {
     super(selector, page);
-
+    this.providedOptionTag = options?.optionTagName;
   }
 
   private async setDropDownType() { 
+    if (this.providedOptionTag !== undefined) {
+      this.optionTagName = this.providedOptionTag;
+      return;
+    }
     const isDropDownHaveSelectTagName = await this.element.getAttribute('tagName') === this.selectorTag; 
     this.optionTagName =  (isDropDownHaveSelectTagName) ? "option" : "li";
   }
