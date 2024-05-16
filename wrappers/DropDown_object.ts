@@ -7,15 +7,20 @@ import { Locator, Page, expect } from '@playwright/test';
  * @class
  */
 export class DropDown_object extends Wrapper{
+  providedOptionTag;
   optionTagName = "li";
   get selectorTag() {return "select";}
   
-  constructor(selector: Locator | string, page: Page) {
+  constructor(selector: Locator | string, page: Page, options?: {optionTagName: string}) {
     super(selector, page);
-
+    this.providedOptionTag = options?.optionTagName;
   }
 
   private async setDropDownType() { 
+    if (this.providedOptionTag !== undefined) {
+      this.optionTagName = this.providedOptionTag;
+      return;
+    }
     const isDropDownHaveSelectTagName = await this.element.getAttribute('tagName') === this.selectorTag; 
     this.optionTagName =  (isDropDownHaveSelectTagName) ? "option" : "li";
   }
@@ -89,6 +94,31 @@ async selectComboboxOption(text: string) {
     await this.element.click();
     const optionsList = this.page.locator('.tyk-combobox2__combobox-list');
     return await optionsList.locator(this.optionTagName).first().click();
+  }
+/**
+ * selecting option at index.
+ * function will open dropDown list and click on n-th element
+ * @function
+ */
+  async selectOptionAtIndex(index: number) {
+    await this.setDropDownType();
+    await this.element.click();
+    const optionsList = this.page.locator('.tyk-combobox2__combobox-list');
+    const option = optionsList.locator(">" + this.optionTagName ).nth(index);
+    await option.click();
+  }
+
+  /**
+ * returning count of available options.
+ * @function
+ * @returns {Number} count of options
+ */
+  async getOptionCount(): Promise<number> {
+    await this.setDropDownType();
+    await this.element.click();
+    const optionsList = this.page.locator('.tyk-combobox2__combobox-list');
+    const options = await optionsList.locator(">" + this.optionTagName ).all();
+    return options.length;
   }
 
   /**
