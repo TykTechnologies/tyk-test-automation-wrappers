@@ -95,6 +95,31 @@ async selectComboboxOption(text: string) {
     const optionsList = this.page.locator('.tyk-combobox2__combobox-list');
     return await optionsList.locator(this.optionTagName).first().click();
   }
+/**
+ * selecting option at index.
+ * function will open dropDown list and click on n-th element
+ * @function
+ */
+  async selectOptionAtIndex(index: number) {
+    await this.setDropDownType();
+    await this.element.click();
+    const optionsList = this.page.locator('.tyk-combobox2__combobox-list');
+    const option = optionsList.locator(">" + this.optionTagName ).nth(index);
+    await option.click();
+  }
+
+  /**
+ * returning count of available options.
+ * @function
+ * @returns {Number} count of options
+ */
+  async getOptionCount(): Promise<number> {
+    await this.setDropDownType();
+    await this.element.click();
+    const optionsList = this.page.locator('.tyk-combobox2__combobox-list');
+    const options = await optionsList.locator(">" + this.optionTagName ).all();
+    return options.length;
+  }
 
   /**
    * inputing String values into mixed Input-Dropdown fields 
