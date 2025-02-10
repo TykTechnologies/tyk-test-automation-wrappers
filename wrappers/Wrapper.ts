@@ -99,6 +99,12 @@ export class Wrapper {
  */
   async scrollIntoView(): Promise<void> { await this.element.scrollIntoViewIfNeeded(); }
 
+    /**
+ * @function
+ * Fuction added to make it backward capatible with old tests
+ */
+    async scrollIntoViewIfNeeded(): Promise<void> { await this.element.scrollIntoViewIfNeeded(); }
+
   async toHaveValue(value: string): Promise<boolean> {
     return await this.element.inputValue() === value;
   }
