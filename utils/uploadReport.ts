@@ -7,7 +7,7 @@ const mime = require('mime-types');
 const AWS_ACCESS_KEY_ID = process.env.AWS_ACCESS_KEY_ID ;
 const AWS_SECRET_ACCESS_KEY = process.env.AWS_SECRET_ACCESS_KEY;
 const AWS_REGION = process.env.AWS_REGION || 'eu-central-1';
-const BUCKET_NAME = process.env.AWS_S3_BUCKET || 'tyk-qa-reports';
+const BUCKET_NAME = process.env.AWS_S3_BUCKET || 'tyk-automated-tests-reports';
 const RUN_ID = process.env.RUN_ID;
 const BASE_FOLDER_PATH = './playwright-report';
 
