@@ -42,6 +42,15 @@ export class DropDown_object extends Wrapper{
   console.log(`>>> Selecting option: locator${this.optionTagName}=locator${text} in locator${this.element}`);
   await this.element.click();
   const optionElement = await this.getOptionElement(text);
+  // try to reopen dropdown if option is not visible - 5 times
+  for (let i = 0; i < 5; i++) {
+    if (await optionElement.isVisible()) {
+      break;
+    }
+    console.warn(`Option locator${this.optionTagName}=locator${text} not visible, retrying to open dropdown (${i + 1}/5)`);
+    await this.page.waitForTimeout(500);
+    await this.element.click();
+  }
   await optionElement.click();
 }
 
