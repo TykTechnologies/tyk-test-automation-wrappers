@@ -47,6 +47,7 @@ export class DropDown_object extends Wrapper{
     if (await optionElement.isVisible()) {
       break;
     }
+    console.warn(`Option locator${this.optionTagName}=locator${text} not visible, retrying to open dropdown (${i + 1}/5)`);
     await this.page.waitForTimeout(500);
     await this.element.click();
   }
