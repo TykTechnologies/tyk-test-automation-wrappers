@@ -47,6 +47,7 @@ export class DropDown_object extends Wrapper{
     if (await optionElement.isVisible()) {
       break;
     }
+    await this.page.waitForTimeout(500);
     await this.element.click();
   }
   await optionElement.click();
